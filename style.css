@@ -67,9 +67,9 @@ p {
 }
 
 @keyframes pulse {
-  0% { filter: drop-shadow(0 6px 8px rgba(0,0,0,0.08)); transform: translate(0, -50%) scale(1); }
-  50% { filter: drop-shadow(0 10px 20px rgba(0,0,0,0.12)); transform: translate(0, -50%) scale(1.06); }
-  100% { filter: drop-shadow(0 6px 8px rgba(0,0,0,0.08)); transform: translate(0, -50%) scale(1); }
+  0% { filter: drop-shadow(0 6px 8px rgba(0,0,0,0.08)); box-shadow: 0 6px 8px rgba(0,0,0,0.08); }
+  50% { filter: drop-shadow(0 10px 20px rgba(0,0,0,0.12)); box-shadow: 0 10px 20px rgba(230,120,20,0.18); }
+  100% { filter: drop-shadow(0 6px 8px rgba(0,0,0,0.08)); box-shadow: 0 6px 8px rgba(0,0,0,0.08); }
 }
 
 @keyframes gradientShift {
