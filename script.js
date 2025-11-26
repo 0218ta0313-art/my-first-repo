@@ -190,7 +190,9 @@ function updateBounds() {
 }
 
 function draw() {
-  shape.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+  shape.style.setProperty('--tx', `${posX}px`);
+  shape.style.setProperty('--ty', `${posY}px`);
+  shape.style.setProperty('--s', String(scale));
 }
 
 function loop(timestamp) {

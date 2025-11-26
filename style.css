@@ -103,21 +103,18 @@ p {
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate(0, 0);
+  /* use CSS variables set by JS to control position and scale */
+  transform: translateX(var(--tx, 0px)) translateY(var(--ty, 0px)) scale(var(--s, 1));
   box-shadow: 0 6px 14px rgba(0,0,0,0.12);
-
-  /* --- PR側（nyao-test-branch）の追加 --- */
   transition: transform 220ms cubic-bezier(.2,.9,.3,1), box-shadow 220ms;
   animation: pulse 2.6s ease-in-out infinite;
-
-  /* --- main側の追加 --- */
   will-change: transform;
   cursor: pointer;
   touch-action: none;
 }
 
 .shape:hover {
-  transform: translate(0, -50%) scale(1.08) rotate(-6deg);
+  transform: translateX(var(--tx, 0px)) translateY(var(--ty, 0px)) scale(1.08) rotate(-6deg);
   box-shadow: 0 10px 30px rgba(230,120,20,0.28);
 }
 
@@ -131,9 +128,9 @@ p {
 }
 
 @keyframes pulse {
-  0% { filter: drop-shadow(0 6px 8px rgba(0,0,0,0.08)); box-shadow: 0 6px 8px rgba(0,0,0,0.08); }
-  50% { filter: drop-shadow(0 10px 20px rgba(0,0,0,0.12)); box-shadow: 0 10px 20px rgba(230,120,20,0.18); }
-  100% { filter: drop-shadow(0 6px 8px rgba(0,0,0,0.08)); box-shadow: 0 6px 8px rgba(0,0,0,0.08); }
+  0% { box-shadow: 0 6px 14px rgba(0,0,0,0.12); }
+  50% { box-shadow: 0 12px 28px rgba(0,0,0,0.14); }
+  100% { box-shadow: 0 6px 14px rgba(0,0,0,0.12); }
 }
 
 @keyframes gradientShift {
