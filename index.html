@@ -19,10 +19,15 @@
   <!-- Animation playground -->
   <section class="playground" id="playground">
     <div id="shape" class="shape" aria-hidden="true"></div>
+    <!-- target zone on the ceiling: hitting this awards points (UFO) -->
+    <div id="targetZone" class="target-zone" aria-hidden="true" title="Target">
+      <div class="ufo-lights" aria-hidden="true"></div>
+    </div>
   </section>
   
   <!-- Controls -->
   <div class="controls">
+    <div class="scoreboard">Score: <span id="score">0</span></div>
     <button id="startBtn">Start</button>
     <button id="pauseBtn">Pause</button>
     <button id="resetBtn">Reset</button>
