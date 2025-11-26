@@ -8,5 +8,21 @@
 <body>
   <h1>Git と GitHub の練習中！</h1>
   <p>これはリポジトリの中に追加した、はじめての HTML ファイルです。</p>
+  
+  <!-- Animation playground -->
+  <section class="playground" id="playground">
+    <div id="shape" class="shape" aria-hidden="true"></div>
+  </section>
+  
+  <!-- Controls -->
+  <div class="controls">
+    <button id="startBtn">Start</button>
+    <button id="pauseBtn">Pause</button>
+    <button id="resetBtn">Reset</button>
+    <label for="speedRange">Speed</label>
+    <input type="range" id="speedRange" min="1" max="10" value="4">
+  </div>
+  
+  <script src="script.js" defer></script>
 </body>
 </html>
