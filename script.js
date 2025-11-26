@@ -7,6 +7,44 @@ const pauseBtn = document.getElementById('pauseBtn');
 const resetBtn = document.getElementById('resetBtn');
 const speedRange = document.getElementById('speedRange');
 
+// Eyes: pupils follow pointer/touch position
+const eyes = document.querySelectorAll('.eye');
+const pupils = document.querySelectorAll('.eye .pupil');
+
+function centerPupils() {
+  pupils.forEach((pupil) => {
+    pupil.style.transform = 'translate(-50%, -50%)';
+  });
+}
+
+function movePupils(clientX, clientY) {
+  if (!eyes.length) return;
+  eyes.forEach((eye) => {
+    const pupil = eye.querySelector('.pupil');
+    if (!pupil) return;
+    const rect = eye.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const dx = clientX - centerX;
+    const dy = clientY - centerY;
+    const angle = Math.atan2(dy, dx);
+    const maxOffset = rect.width * 0.22; // keep pupil inside eye
+    const dist = Math.min(maxOffset, Math.hypot(dx, dy));
+    const offsetX = Math.cos(angle) * dist;
+    const offsetY = Math.sin(angle) * dist;
+    pupil.style.transform = `translate(-50%, -50%) translate(${offsetX}px, ${offsetY}px)`;
+  });
+}
+
+if (eyes.length) {
+  window.addEventListener('pointermove', (ev) => movePupils(ev.clientX, ev.clientY));
+  window.addEventListener('pointerleave', () => centerPupils());
+  window.addEventListener('touchstart', (ev) => {
+    const touch = ev.touches[0];
+    if (touch) movePupils(touch.clientX, touch.clientY);
+  }, { passive: true });
+}
+
 // particle / confetti setup — guard against missing DOM nodes so script doesn't crash
 let pctx = null;
 let particles = [];

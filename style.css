@@ -7,6 +7,81 @@ body {
   animation: gradientShift 12s ease infinite;
 }
 
+h1 {
+  color: #2c3e50;
+  border-bottom: 2px solid #2c3e50;
+  padding-bottom: 10px;
+}
+
+p {
+  font-size: 18px;
+  color: #333;
+}
+
+/* Eyes header */
+.gaze-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  max-width: 760px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(236,242,255,0.92));
+  border: 1.5px solid #dce2f5;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(44, 62, 80, 0.08);
+  backdrop-filter: blur(4px);
+}
+
+.gaze-label {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #2c3e50;
+}
+
+.eyes {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eye {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(145deg, #f9fafc, #eaeff8);
+  border: 3px solid #2c3e50;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 6px #fff, 0 8px 20px rgba(44,62,80,0.16);
+}
+
+.eye::after {
+  content: '';
+  position: absolute;
+  top: 18%;
+  left: 22%;
+  width: 14px;
+  height: 14px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 50%;
+  filter: blur(0.4px);
+}
+
+.pupil {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 35% 30%, #ffffff, #2c3e50 70%);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 120ms ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
 /* Playground styles */
 .playground {
   width: 100%;
@@ -90,6 +165,9 @@ input[type="range"] { width: 140px }
 @media (max-width: 480px) {
   .playground { height: 100px }
   .shape { width: 32px; height: 32px }
+  .gaze-header { padding: 12px; gap: 10px }
+  .gaze-label { font-size: 16px }
+  .eye { width: 44px; height: 44px }
 }
 
 /* small description */
