@@ -180,6 +180,27 @@ let forceRunUntilSettled = false; // when clicked while paused, temporarily run 
 let resumeRunning = null;
 let tempLockHorizontal = false; // when showing bounce while paused, suspend horizontal movement
 
+// scoring / target
+const targetZone = document.getElementById('targetZone');
+const scoreEl = document.getElementById('score');
+let score = 0;
+let lastScoreTime = 0;
+const scoreCooldown = 700; // ms between possible scores
+
+// move target to a random horizontal position within playground bounds
+function repositionTargetRandom() {
+  if (!targetZone || !playground) return;
+  const pgW = playground.clientWidth;
+  const tzW = targetZone.clientWidth || 60; // fallback
+  const margin = 8;
+  const maxLeft = Math.max(margin, pgW - tzW - margin);
+  const left = Math.floor(margin + Math.random() * (Math.max(0, maxLeft - margin)));
+  targetZone.style.left = `${left}px`;
+}
+
+// initial randomize so target isn't always centered
+repositionTargetRandom();
+
 function updateBounds() {
   // ensure posX is not out of bounds after resize
   const maxX = playground.clientWidth - shape.clientWidth;
@@ -245,6 +266,42 @@ function loop(timestamp) {
   // scale easing
   const scaleSpeed = 10; // larger => faster return to 1
   scale += (scaleTarget - scale) * Math.min(1, scaleSpeed * dt);
+
+  // target collision / scoring
+  if (targetZone && scoreEl) {
+    try {
+      const now = Date.now();
+      // shape center X relative to playground
+      const shapeCenterX = posX + shape.clientWidth / 2;
+      const pgRect = playground.getBoundingClientRect();
+      const tRect = targetZone.getBoundingClientRect();
+      const tLeft = tRect.left - pgRect.left;
+      const tRight = tLeft + tRect.width;
+      const tBottom = tRect.top - pgRect.top + tRect.height;
+
+      // if the ball's top has reached the target bottom (i.e. hit the ceiling area)
+      // require upward movement (vy < 0) to count as a hit and respect cooldown
+      if (vy < 0 && posY <= (tBottom + 2) && shapeCenterX >= tLeft && shapeCenterX <= tRight) {
+        if (now - lastScoreTime > scoreCooldown) {
+          lastScoreTime = now;
+          score += 1;
+          scoreEl.textContent = String(score);
+          // visual feedback on target
+          targetZone.classList.add('hit');
+          // small confetti at impact
+          const impactX = shapeCenterX;
+          const impactY = posY + shape.clientHeight / 2;
+          createConfettiBurst(impactX, impactY, 14);
+          setTimeout(() => targetZone.classList.remove('hit'), 420);
+          // reposition target to a new random X after a short delay
+          setTimeout(() => repositionTargetRandom(), 260);
+        }
+      }
+    } catch (e) {
+      // defensive: any DOM read error should not break the loop
+      // console.warn('scoring check failed', e);
+    }
+  }
 
   draw();
   requestAnimationFrame(loop);

@@ -95,6 +95,82 @@ p {
   overflow: hidden;
 }
 
+/* target zone (top ceiling area) */
+.target-zone {
+  position: absolute;
+  top: 8px;
+  height: 36px;
+  width: 84px; /* a bit wider for a nicer saucer */
+  left: calc(50% - 42px);
+  pointer-events: none;
+  display: block;
+  transform-origin: center;
+  animation: ufoFloat 3.2s ease-in-out infinite;
+}
+
+/* saucer base */
+.target-zone::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  transform: translate(-50%, -50%);
+  width: 140%;
+  height: 72%;
+  border-radius: 50% / 40%;
+  background: linear-gradient(180deg, #f7f9fb 0%, #dde7f2 40%, #c0cfe0 100%);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.16), 0 1px 0 rgba(255,255,255,0.7) inset;
+  border: 1px solid rgba(255,255,255,0.28);
+}
+
+/* dome */
+.target-zone::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 12%;
+  transform: translate(-50%, 0);
+  width: 56%;
+  height: 62%;
+  border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+  background: radial-gradient(circle at 35% 30%, #ffffff 0%, #f1f5fb 18%, rgba(200,215,240,0.6) 48%, rgba(120,140,170,0.12) 100%);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08) inset;
+}
+
+/* underside lights (three yellow lamps) */
+.target-zone .ufo-lights {
+  position: absolute;
+  left: 50%;
+  top: 66%;
+  transform: translate(-50%, 0);
+  width: 70%;
+  height: 28%;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 18% 50%, #ffd86b 0 22%, rgba(255,216,107,0) 24%),
+    radial-gradient(circle at 50% 52%, #ffd86b 0 22%, rgba(255,216,107,0) 24%),
+    radial-gradient(circle at 82% 50%, #ffd86b 0 22%, rgba(255,216,107,0) 24%);
+  box-shadow: 0 8px 20px rgba(255,200,80,0.12) inset, 0 6px 14px rgba(255,200,80,0.08);
+}
+
+.target-zone.hit {
+  transform: translateY(-10px) scale(1.08);
+  filter: drop-shadow(0 10px 20px rgba(255,200,90,0.12));
+}
+
+@keyframes ufoFloat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+.scoreboard {
+  display: inline-block;
+  margin-right: 8px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
 .shape {
   width: 40px;
   height: 40px;
